@@ -94,14 +94,23 @@ private:
                     if (state[neighbor] == 'Y') {
                         happiness += 1; // Green-yellow connection adds to happiness
                     }
+                    if (state[neighbor] == 'R') {
+                        happiness -= 1; // Red-green connection subtracts from happiness
+                    }
                 }
             }
             else if (state[i] == 'R') {
                 happiness -= 1; // Red building subtracts from happiness
+                for (int neighbor: nodes[i].neighbors) {
+                    if (state[neighbor] == 'G') {
+                        happiness -= 1; // Red-green connection subtracts from happiness
+                    }
+                }
             }
         }
         return happiness;
     }
+
 
     int calculateProduction(const std::array<char, 12>&state) {
         int production = 0;
