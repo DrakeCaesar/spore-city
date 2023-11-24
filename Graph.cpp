@@ -118,6 +118,8 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
     // ANSI color codes
     const std::string red("\033[31m"), green("\033[32m"), yellow("\033[33m"), reset("\033[0m");
 
+    replaceAll(layout, "A", "10");
+    replaceAll(layout, "B", "11");
 
     for (int i = 0; i < 12; ++i) {
         std::string colorCode;
@@ -132,10 +134,10 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
                 break;
         }
         std::string coloredLetter = colorCode + (i == 0 ? 'C' : bestState[i]) + reset;
-        std::string placeholder = "{" + std::to_string(i) + "}";
+        std::string placeholder = "(" + std::to_string(i) + ")";
         size_t placeholderLength = placeholder.length();
         for (size_t pos = layout.find(placeholder); pos != std::string::npos; pos = layout.find(placeholder, pos)) {
-            layout.replace(pos, placeholderLength, coloredLetter);
+            layout.replace(pos, placeholderLength, "(" + coloredLetter + ")");
         }
     }
     replaceAll(layout, "Y", "H");
