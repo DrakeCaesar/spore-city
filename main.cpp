@@ -37,14 +37,16 @@ public:
         state[0] = 'Y'; // Center node is always yellow
 
         int maxProduction = 0;
+        int maxHappiness = 0;
         std::array<char, 12> bestState;
 
         // Call recursive function to generate all states and calculate production
-        generateStates(state, 1, maxProduction, bestState);
+        generateStates(state, 1, maxProduction, maxHappiness, bestState);
 
         // Output the best state found and print the layout
-        std::cout << "Max Production: " << maxProduction << "\n";
-        printLayout(bestState);
+        // std::cout << "Max Production: " << maxProduction << "\n";
+        // std::cout << "Max Happiness: " << maxHappiness << "\n";
+        printLayout(bestState, maxHappiness, maxProduction);
     }
 
 private:
@@ -55,12 +57,15 @@ private:
         nodes[to].neighbors.push_back(from);
     }
 
-    void generateStates(std::array<char, 12>&state, int nodeIndex, int&maxProduction, std::array<char, 12>&bestState) {
+    void generateStates(std::array<char, 12>&state, int nodeIndex, int&maxProduction, int&maxHappiness,
+                        std::array<char, 12>&bestState) {
         if (nodeIndex == 12) {
             // All nodes have been assigned a state
             int production = calculateProduction(state);
-            if (production > maxProduction) {
+            int happiness = calculateHappiness(state);
+            if (production > maxProduction && happiness >= 1) {
                 maxProduction = production;
+                maxHappiness = happiness;
                 bestState = state;
             }
             return;
@@ -68,16 +73,34 @@ private:
 
         if (nodeIndex == 0) {
             // Skip the center node
-            generateStates(state, nodeIndex + 1, maxProduction, bestState);
+            generateStates(state, nodeIndex + 1, maxProduction, maxHappiness, bestState);
         }
         else {
             // Generate states for this node
             const char types[3] = {'G', 'R', 'Y'};
             for (char type: types) {
                 state[nodeIndex] = type;
-                generateStates(state, nodeIndex + 1, maxProduction, bestState);
+                generateStates(state, nodeIndex + 1, maxProduction, maxHappiness, bestState);
             }
         }
+    }
+
+    int calculateHappiness(const std::array<char, 12>&state) {
+        int happiness = 0;
+        for (int i = 0; i < 12; ++i) {
+            if (state[i] == 'G') {
+                happiness += 1; // Green building adds to happiness
+                for (int neighbor: nodes[i].neighbors) {
+                    if (state[neighbor] == 'Y') {
+                        happiness += 1; // Green-yellow connection adds to happiness
+                    }
+                }
+            }
+            else if (state[i] == 'R') {
+                happiness -= 1; // Red building subtracts from happiness
+            }
+        }
+        return happiness;
     }
 
     int calculateProduction(const std::array<char, 12>&state) {
@@ -86,7 +109,7 @@ private:
             if (state[i] == 'R') {
                 for (int neighbor: nodes[i].neighbors) {
                     if (state[neighbor] == 'Y') {
-                        production += 18;
+                        production += 12; // Red-yellow connection adds 12 to production
                     }
                 }
             }
@@ -94,7 +117,7 @@ private:
         return production;
     }
 
-    void printLayout(const std::array<char, 12>&bestState) {
+    void printLayout(const std::array<char, 12>&bestState, int happiness, int production) {
         std::string layout = R"(
       ({4})---({2})
       / \   / \
@@ -110,6 +133,8 @@ private:
                 layout.replace(pos, 3, std::string(1, bestState[i]));
             }
         }
+        std::cout << "Layout Production: " << production << "\n";
+        std::cout << "Layout Happiness: " << happiness << "\n";
         std::cout << layout;
     }
 };
