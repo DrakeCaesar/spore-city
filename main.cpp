@@ -117,7 +117,19 @@ private:
         return production;
     }
 
+    void replaceAll(std::string&str, const std::string&from, const std::string&to) {
+        size_t start_pos = 0;
+        while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+            str.replace(start_pos, from.length(), to);
+            start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+        }
+    }
+
+
     void printLayout(const std::array<char, 12>&bestState, int happiness, int production) {
+        // ANSI color codes
+        const std::string red("\033[31m"), green("\033[32m"), yellow("\033[33m"), reset("\033[0m");
+
         std::string layout = R"(
       ({4})---({2})
       / \   / \
@@ -128,13 +140,29 @@ private:
    ({7})---({8})---({9})
 )";
         for (int i = 0; i < 12; ++i) {
-            for (size_t pos = layout.find("{" + std::to_string(i) + "}"); pos != std::string::npos;
-                 pos = layout.find("{" + std::to_string(i) + "}")) {
-                layout.replace(pos, 3, std::string(1, bestState[i]));
+            std::string colorCode;
+            switch (bestState[i]) {
+                case 'R': colorCode = red;
+                    break;
+                case 'G': colorCode = green;
+                    break;
+                case 'Y': colorCode = reset;
+                    break;
+                default: colorCode = reset;
+                    break;
+            }
+            std::string coloredLetter = colorCode + (i == 0 ? 'C' : bestState[i]) + reset;
+            std::string placeholder = "{" + std::to_string(i) + "}";
+            size_t placeholderLength = placeholder.length();
+            for (size_t pos = layout.find(placeholder); pos != std::string::npos; pos = layout.find(placeholder, pos)) {
+                layout.replace(pos, placeholderLength, coloredLetter);
             }
         }
-        std::cout << "Layout Production: " << production << "\n";
+        replaceAll(layout, "Y", "H");
+        replaceAll(layout, "R", "F");
+        replaceAll(layout, "G", "E");
         std::cout << "Layout Happiness: " << happiness << "\n";
+        std::cout << "Layout Production: " << production << "\n";
         std::cout << layout;
     }
 };
