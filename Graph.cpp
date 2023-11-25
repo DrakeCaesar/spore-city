@@ -151,5 +151,5 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
     std::cout << "Layout Name:       " << name << "\n";
     std::cout << "Layout Happiness:  " << happiness << "\n";
     std::cout << "Layout Production: " << production << "\n";
-    std::cout << layout;
+    std::cout << layout << "\n" << "\n";
 }
