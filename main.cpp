@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <string>
 #include <tuple>
@@ -7,7 +8,7 @@ int main() {
     std::vector<std::tuple<std::string, std::string, std::vector<std::pair<int, int>>>> graphConfigurations;
 
     graphConfigurations.push_back(std::make_tuple(
-        "Colony",
+        "Space Colony",
         R"(
           (4)---(2)
           / \   / \
@@ -109,6 +110,7 @@ int main() {
         }
     ));
 
+    std::cout << "Name:\t\tH:\tP:\n";
 
     for (const auto&config: graphConfigurations) {
         Graph graph(std::get<0>(config), std::get<1>(config), std::get<2>(config));

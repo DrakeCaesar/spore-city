@@ -52,6 +52,10 @@ void Graph::generateStates(std::array<char, 12>&state, int nodeIndex, int&maxPro
             maxHappiness = happiness;
             bestState = state;
         }
+        if (production == maxProduction && happiness > maxHappiness) {
+            maxHappiness = happiness;
+            bestState = state;
+        }
         return;
     }
 
@@ -148,8 +152,10 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
     replaceAll(layout, "Y", "H");
     replaceAll(layout, "R", "F");
     replaceAll(layout, "G", "E");
-    std::cout << "Layout Name:       " << name << "\n";
-    std::cout << "Layout Happiness:  " << happiness << "\n";
-    std::cout << "Layout Production: " << production << "\n";
-    std::cout << layout << "\n" << "\n";
+    // std::cout << "Layout Name:       " << name << "\n";
+    // std::cout << "Layout Happiness:  " << happiness << "\n";
+    // std::cout << "Layout Production: " << production << "\n";
+    // std::cout << layout << "\n" << "\n";
+
+    std::cout << name << "\t" << happiness << "\t" << production << "\n";
 }
