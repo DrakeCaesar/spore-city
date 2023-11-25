@@ -84,21 +84,28 @@ int main() {
         "Religious 1",
         R"(placeholder)",
         std::vector<std::pair<int, int>>{
-
+            {0, 1}, {0, 6}, {0, 7}, {0, 9}, {1, 2}, {1, 3},
+            {1, 11}, {2, 3}, {2, 4}, {2, 6}, {4, 5}, {5, 7},
+            {6, 7}, {7, 9}, {8, 9}, {9, 10}
         }
     ));
     graphConfigurations.push_back(std::make_tuple(
         "Religious 2",
         R"(placeholder)",
         std::vector<std::pair<int, int>>{
-
+            {0, 1}, {0, 2}, {0, 5}, {0, 7}, {0, 9}, {1, 2},
+            {1, 3}, {1, 11}, {2, 3}, {2, 4}, {2, 5}, {5, 6},
+            {5, 7}, {6, 7}, {7, 9}, {8, 9}, {9, 10}
         }
     ));
     graphConfigurations.push_back(std::make_tuple(
         "Religious 3",
         R"(placeholder)",
         std::vector<std::pair<int, int>>{
-
+            {0, 1}, {0, 2}, {0, 5}, {0, 7}, {0, 9}, {1, 2},
+            {1, 3}, {1, 11}, {2, 4}, {2, 5}, {3, 4}, {4, 5},
+            {5, 6}, {5, 7}, {6, 7}, {7, 8}, {7, 9}, {8, 9},
+            {9, 11}
         }
     ));
 
