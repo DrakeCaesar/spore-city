@@ -7,7 +7,12 @@
 #include <iostream>
 
 
-Graph::Graph() {
+Graph::Graph(const std::string&layout, const std::vector<std::pair<int, int>>&edges)
+    : layout(layout), edges(edges) {
+    // add edges
+    for (const auto&edge: edges) {
+        addEdge(edge.first, edge.second);
+    }
 }
 
 void Graph::findHighestProduction() {

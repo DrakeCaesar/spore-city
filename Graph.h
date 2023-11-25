@@ -16,16 +16,16 @@ struct Node {
 
 class Graph {
 public:
-    std::string layout;
-
-    Graph();
+    Graph(const std::string&layout, const std::vector<std::pair<int, int>>&edges);
 
     void findHighestProduction();
 
-protected:
+private:
+    std::string layout;
+    std::vector<std::pair<int, int>> edges;
     std::array<Node, 12> nodes;
 
-    void addEdge(int from, int to);
+    void addEdge(int u, int v);
 
     void generateStates(std::array<char, 12>&state, int nodeIndex, int&maxProduction, int&maxHappiness,
                         std::array<char, 12>&bestState);
