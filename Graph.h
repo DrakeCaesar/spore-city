@@ -16,11 +16,12 @@ struct Node {
 
 class Graph {
 public:
-    Graph(const std::string&layout, const std::vector<std::pair<int, int>>&edges);
+    Graph(const std::string&name, const std::string&layout, const std::vector<std::pair<int, int>>&edges);
 
     void findHighestProduction();
 
 private:
+    std::string name;
     std::string layout;
     std::vector<std::pair<int, int>> edges;
     std::array<Node, 12> nodes;

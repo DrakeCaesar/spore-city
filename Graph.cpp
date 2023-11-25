@@ -7,8 +7,8 @@
 #include <iostream>
 
 
-Graph::Graph(const std::string&layout, const std::vector<std::pair<int, int>>&edges)
-    : layout(layout), edges(edges) {
+Graph::Graph(const std::string&name, const std::string&layout, const std::vector<std::pair<int, int>>&edges)
+    : name(name), layout(layout), edges(edges) {
     // add edges
     for (const auto&edge: edges) {
         addEdge(edge.first, edge.second);
@@ -148,7 +148,8 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
     replaceAll(layout, "Y", "H");
     replaceAll(layout, "R", "F");
     replaceAll(layout, "G", "E");
-    std::cout << "Layout Happiness: " << happiness << "\n";
+    std::cout << "Layout Name:       " << name << "\n";
+    std::cout << "Layout Happiness:  " << happiness << "\n";
     std::cout << "Layout Production: " << production << "\n";
     std::cout << layout;
 }
