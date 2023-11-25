@@ -20,10 +20,6 @@ void Graph::findHighestProduction() {
     state.fill('Y'); // Initial state is all yellow
     state[0] = 'Y'; // Center node is always yellow
 
-    int maxProduction = 0;
-    int maxHappiness = 0;
-    std::array<char, 12> bestState;
-
     // Call recursive function to generate all states and calculate production
     generateStates(state, 1, maxProduction, maxHappiness, bestState);
 
@@ -123,7 +119,7 @@ void Graph::replaceAll(std::string&str, const std::string&from, const std::strin
 }
 
 
-void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int production) {
+void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int production, bool graph) {
     // ANSI color codes
     const std::string red("\033[31m"), green("\033[32m"), yellow("\033[33m"), reset("\033[0m");
 
@@ -152,10 +148,15 @@ void Graph::printLayout(const std::array<char, 12>&bestState, int happiness, int
     replaceAll(layout, "Y", "H");
     replaceAll(layout, "R", "F");
     replaceAll(layout, "G", "E");
+
+    if (graph) {
+        std::cout << layout << "\n" << "\n";
+    }
+    else {
+        std::cout << name << "\t" << happiness << "\t" << production << "\n";
+    }
+
     // std::cout << "Layout Name:       " << name << "\n";
     // std::cout << "Layout Happiness:  " << happiness << "\n";
     // std::cout << "Layout Production: " << production << "\n";
-    // std::cout << layout << "\n" << "\n";
-
-    std::cout << name << "\t" << happiness << "\t" << production << "\n";
 }

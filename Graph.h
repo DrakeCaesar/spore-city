@@ -20,9 +20,17 @@ public:
 
     void findHighestProduction();
 
-private:
     std::string name;
     std::string layout;
+    int maxHappiness = -1000;
+    int maxProduction = 0;
+
+    std::array<char, 12> bestState;
+
+
+    void printLayout(const std::array<char, 12>&bestState, int happiness, int production, bool graph = false);
+
+private:
     std::vector<std::pair<int, int>> edges;
     std::array<Node, 12> nodes;
 
@@ -36,8 +44,6 @@ private:
     int calculateProduction(const std::array<char, 12>&state);
 
     void replaceAll(std::string&str, const std::string&from, const std::string&to);
-
-    void printLayout(const std::array<char, 12>&bestState, int happiness, int production);
 };
 
 

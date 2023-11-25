@@ -112,9 +112,37 @@ int main() {
 
     std::cout << "Name:\t\tH:\tP:\n";
 
+    std::vector<Graph> graphs;
+
     for (const auto&config: graphConfigurations) {
         Graph graph(std::get<0>(config), std::get<1>(config), std::get<2>(config));
         graph.findHighestProduction();
+        graphs.push_back(graph);
     }
+
+    // find best grapsh
+    int maxProduction = 0;
+    int maxHappiness = -1000;
+    Graph* bestGraph = nullptr;
+
+    for (auto&graph: graphs) {
+        if (graph.maxProduction > maxProduction) {
+            maxProduction = graph.maxProduction;
+            maxHappiness = graph.maxHappiness;
+            bestGraph = &graph;
+        }
+        if (graph.maxProduction == maxProduction && graph.maxHappiness > maxHappiness) {
+            maxHappiness = graph.maxHappiness;
+            bestGraph = &graph;
+        }
+    }
+    std::cout << std::endl;
+
+    std::cout << "Best graph:     " << bestGraph->name << "\n";
+    std::cout << "Max Production: " << maxProduction << "\n";
+    std::cout << "Max Happiness:  " << maxHappiness << "\n";
+    bestGraph->printLayout(bestGraph->bestState, maxHappiness, maxProduction, true);
+
+
     return 0;
 }
